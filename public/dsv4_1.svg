@@ -1,0 +1,482 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="100%" height="100%">
+  <defs>
+    <!-- 基础滤镜：投影与发光 -->
+    <filter id="dropShadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#000" flood-opacity="0.6"/>
+    </filter>
+    <filter id="dropShadowLight" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="glowBlue" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowPink" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 背景与桌面渐变 -->
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="70%" fx="50%" fy="30%">
+      <stop offset="0%" stop-color="#1e2a3a"/>
+      <stop offset="60%" stop-color="#0e151e"/>
+      <stop offset="100%" stop-color="#05080c"/>
+    </radialGradient>
+    <linearGradient id="tableGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c1e16"/>
+      <stop offset="50%" stop-color="#1a110c"/>
+      <stop offset="100%" stop-color="#0d0805"/>
+    </linearGradient>
+
+    <!-- 显示器与硬件渐变 -->
+    <linearGradient id="monitorBezel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a4f59"/>
+      <stop offset="20%" stop-color="#2a2e35"/>
+      <stop offset="80%" stop-color="#181a1f"/>
+      <stop offset="100%" stop-color="#0b0c0e"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
+    </linearGradient>
+    <linearGradient id="screenCurve" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(0, 180, 255, 0.4)"/>
+      <stop offset="20%" stop-color="rgba(0, 180, 255, 0.0)"/>
+      <stop offset="80%" stop-color="rgba(0, 180, 255, 0.0)"/>
+      <stop offset="100%" stop-color="rgba(0, 180, 255, 0.3)"/>
+    </linearGradient>
+    
+    <linearGradient id="standGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d0d5dd"/>
+      <stop offset="50%" stop-color="#a4abb5"/>
+      <stop offset="100%" stop-color="#6e7683"/>
+    </linearGradient>
+    <linearGradient id="standBaseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2a2e35"/>
+      <stop offset="50%" stop-color="#4a4f59"/>
+      <stop offset="100%" stop-color="#1a1c21"/>
+    </linearGradient>
+
+    <!-- 玻璃板渐变 -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.15)"/>
+      <stop offset="50%" stop-color="rgba(255, 255, 255, 0.05)"/>
+      <stop offset="100%" stop-color="rgba(0, 150, 255, 0.1)"/>
+    </linearGradient>
+
+    <!-- 键盘渐变 -->
+    <linearGradient id="kbBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a3f4a"/>
+      <stop offset="50%" stop-color="#2a2e35"/>
+      <stop offset="100%" stop-color="#181a1f"/>
+    </linearGradient>
+    <linearGradient id="keyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5a5f6a"/>
+      <stop offset="100%" stop-color="#3a3f4a"/>
+    </linearGradient>
+    <linearGradient id="keyPress" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1c21"/>
+      <stop offset="100%" stop-color="#2a2e35"/>
+    </linearGradient>
+
+    <!-- 鼠标渐变 -->
+    <linearGradient id="mouseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a4f59"/>
+      <stop offset="100%" stop-color="#181a1f"/>
+    </linearGradient>
+
+    <!-- 笔渐变 -->
+    <linearGradient id="penBody" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e0e5ec"/>
+      <stop offset="50%" stop-color="#9aa2b0"/>
+      <stop offset="100%" stop-color="#e0e5ec"/>
+    </linearGradient>
+    <linearGradient id="penTip" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4a4f59"/>
+      <stop offset="100%" stop-color="#1a1c21"/>
+    </linearGradient>
+
+    <!-- 章鱼渐变 -->
+    <radialGradient id="octoBody" cx="40%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#ff7eb3"/>
+      <stop offset="70%" stop-color="#e63e78"/>
+      <stop offset="100%" stop-color="#a61a4c"/>
+    </radialGradient>
+    <linearGradient id="tentacleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7eb3"/>
+      <stop offset="100%" stop-color="#a61a4c"/>
+    </linearGradient>
+
+    <!-- 软件窗口UI渐变 -->
+    <linearGradient id="titleBar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e0e5ec"/>
+      <stop offset="100%" stop-color="#c0c5ce"/>
+    </linearGradient>
+    <linearGradient id="toolbarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0f2f5"/>
+      <stop offset="100%" stop-color="#d5d9e0"/>
+    </linearGradient>
+
+    <!-- 工具图标 (复用) -->
+    <g id="toolIcon">
+      <rect x="0" y="0" width="20" height="20" rx="3" fill="none" stroke="#888" stroke-width="1.5"/>
+    </g>
+
+    <!-- 键盘按键复用 -->
+    <g id="key">
+      <rect x="0" y="0" width="30" height="30" rx="5" fill="url(#keyGrad)" filter="url(#dropShadowLight)"/>
+      <rect x="2" y="2" width="26" height="26" rx="3" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    </g>
+    <g id="keyPressed">
+      <rect x="0" y="0" width="30" height="30" rx="5" fill="url(#keyPress)" filter="url(#dropShadowLight)"/>
+      <rect x="2" y="2" width="26" height="26" rx="3" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="1"/>
+    </g>
+    <g id="spaceKey">
+      <rect x="0" y="0" width="200" height="30" rx="5" fill="url(#keyGrad)" filter="url(#dropShadowLight)"/>
+    </g>
+
+    <!-- 吸盘标记 -->
+    <path id="sucker" d="M 0,0 C 4,-4 8,-4 12,0" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1000" height="800" fill="url(#bgGrad)"/>
+  
+  <!-- 桌面 -->
+  <rect x="0" y="350" width="1000" height="450" fill="url(#tableGrad)"/>
+  <line x1="0" y1="350" x2="1000" y2="350" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
+
+  <!-- 环境光效 -->
+  <ellipse cx="500" cy="400" rx="400" ry="200" fill="rgba(0, 180, 255, 0.06)" filter="url(#glowBlue)"/>
+  <ellipse cx="300" cy="200" rx="300" ry="150" fill="rgba(255, 0, 200, 0.05)" filter="url(#glowPink)"/>
+
+  <!-- ==================== 后方区域：显示器与支架 ==================== -->
+  
+  <!-- 显示器支架底座 -->
+  <ellipse cx="500" cy="380" rx="140" ry="40" fill="url(#standBaseGrad)" filter="url(#dropShadow)"/>
+  <!-- 显示器支架颈部 -->
+  <path d="M 460,380 L 480,240 L 520,240 L 540,380 Z" fill="url(#standGrad)"/>
+  
+  <!-- 显示器外壳 -->
+  <rect x="250" y="60" width="500" height="300" rx="30" fill="url(#monitorBezel)" filter="url(#dropShadow)"/>
+  <!-- 外壳高光 -->
+  <rect x="255" y="65" width="490" height="10" rx="5" fill="rgba(255,255,255,0.15)"/>
+  
+  <!-- 曲面显示器屏幕 -->
+  <path d="M 280,90 L 720,90 Q 730,90 730,100 L 730,330 Q 730,340 720,340 L 280,340 Q 270,340 270,330 L 270,100 Q 270,90 280,90 Z" fill="url(#screenGrad)"/>
+  
+  <!-- 屏幕玻璃反光 (曲面效果) -->
+  <path d="M 280,90 L 720,90 Q 730,90 730,100 L 730,330 Q 730,340 720,340 L 280,340 Q 270,340 270,330 L 270,100 Q 270,90 280,90 Z" fill="url(#screenCurve)"/>
+  <path d="M 285,95 L 715,95" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none"/>
+
+  <!-- ==================== 屏幕内容 (GUI / 软件窗口) ==================== -->
+  
+  <!-- 主窗口 (图形软件) -->
+  <g transform="translate(320, 130)">
+    <!-- 窗口阴影与边框 -->
+    <rect x="0" y="0" width="340" height="230" rx="8" fill="rgba(0,0,0,0.5)" filter="url(#dropShadow)"/>
+    <rect x="0" y="0" width="340" height="230" rx="8" fill="#eceef2"/>
+    
+    <!-- 标题栏 -->
+    <rect x="0" y="0" width="340" height="30" rx="8" fill="url(#titleBar)"/>
+    <rect x="0" y="25" width="340" height="5" fill="url(#titleBar)"/>
+    
+    <!-- 窗口控制按钮 (红黄绿) -->
+    <circle cx="20" cy="15" r="6" fill="#ff5f56"/>
+    <circle cx="40" cy="15" r="6" fill="#ffbd2e"/>
+    <circle cx="60" cy="15" r="6" fill="#27c93f"/>
+    
+    <!-- 窗口标题文本 -->
+    <text x="160" y="20" font-family="sans-serif" font-size="12" font-weight="bold" fill="#666" text-anchor="middle">设计软件 — 拟物绘画</text>
+    
+    <!-- 菜单栏 -->
+    <rect x="0" y="30" width="340" height="20" fill="#f5f6f9"/>
+    <text x="15" y="43" font-family="sans-serif" font-size="10" fill="#888">文件</text>
+    <text x="55" y="43" font-family="sans-serif" font-size="10" fill="#888">编辑</text>
+    <text x="95" y="43" font-family="sans-serif" font-size="10" fill="#888">图像</text>
+    <text x="135" y="43" font-family="sans-serif" font-size="10" fill="#888">图层</text>
+    <text x="175" y="43" font-family="sans-serif" font-size="10" fill="#888">滤镜</text>
+
+    <!-- 工具栏 -->
+    <rect x="0" y="50" width="340" height="40" fill="url(#toolbarGrad)"/>
+    <!-- 工具图标 -->
+    <use href="#toolIcon" x="10" y="55"/>
+    <use href="#toolIcon" x="35" y="55"/>
+    <use href="#toolIcon" x="60" y="55"/>
+    <use href="#toolIcon" x="85" y="55"/>
+    <use href="#toolIcon" x="110" y="55"/>
+    <use href="#toolIcon" x="135" y="55"/>
+    <!-- 颜色选择器 -->
+    <rect x="300" y="55" width="25" height="25" rx="4" fill="#ff4081" stroke="#ccc" stroke-width="1"/>
+    <rect x="270" y="55" width="25" height="25" rx="4" fill="#00e5ff" stroke="#ccc" stroke-width="1"/>
+
+    <!-- 画布区域 -->
+    <rect x="20" y="100" width="300" height="120" rx="2" fill="#ffffff" stroke="#d0d5dd" stroke-width="2"/>
+    
+    <!-- 画布上的图形 -->
+    <path d="M 80,180 L 120,120 L 180,160 L 220,100 L 260,180 Z" fill="none" stroke="#ff4081" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="170" cy="140" r="40" fill="none" stroke="#00e5ff" stroke-width="4"/>
+    <path d="M 80,180 C 130,200 180,150 260,180" fill="none" stroke="#ffbd2e" stroke-width="4"/>
+    
+    <!-- 图层调色板 (小窗口) -->
+    <g transform="translate(220, -20)">
+      <rect x="0" y="0" width="100" height="80" rx="5" fill="#f5f6f9" stroke="#d0d5dd" stroke-width="1" filter="url(#dropShadowLight)"/>
+      <rect x="0" y="0" width="100" height="15" rx="5" fill="url(#titleBar)"/>
+      <text x="50" y="11" font-family="sans-serif" font-size="8" fill="#666" text-anchor="middle">图层</text>
+      <rect x="5" y="20" width="90" height="15" fill="#e0e5ec"/>
+      <rect x="5" y="40" width="90" height="15" fill="#00e5ff" opacity="0.3"/>
+      <rect x="5" y="60" width="90" height="15" fill="#ff4081" opacity="0.3"/>
+    </g>
+  </g>
+
+  <!-- 屏幕上的额外UI元素 (桌面图标) -->
+  <g transform="translate(290, 100)">
+    <rect x="0" y="0" width="20" height="20" rx="3" fill="#00e5ff"/>
+    <text x="3" y="13" font-family="sans-serif" font-size="10" fill="white" font-weight="bold">!</text>
+    <text x="25" y="13" font-family="sans-serif" font-size="9" fill="#888">用户指南</text>
+  </g>
+  <g transform="translate(290, 130)">
+    <rect x="0" y="0" width="20" height="20" rx="3" fill="#ffbd2e"/>
+    <text x="5" y="14" font-family="sans-serif" font-size="12" fill="white" font-weight="bold">⚙</text>
+    <text x="25" y="13" font-family="sans-serif" font-size="9" fill="#888">设置</text>
+  </g>
+
+  <!-- ==================== 前方区域：玻璃板 ==================== -->
+  
+  <!-- 玻璃板底座 / 支架痕迹 -->
+  <ellipse cx="500" cy="550" rx="300" ry="80" fill="rgba(0,0,0,0.2)" filter="url(#dropShadow)"/>
+  
+  <!-- 玻璃板本体 (透明面板) -->
+  <g transform="translate(500, 480) rotate(-5)">
+    <rect x="-330" y="-100" width="660" height="200" rx="15" fill="url(#glassGrad)" stroke="rgba(255, 255, 255, 0.6)" stroke-width="4" filter="url(#dropShadow)"/>
+    <!-- 玻璃高光与反射 -->
+    <line x1="-320" y1="-90" x2="320" y2="-90" stroke="rgba(255, 255, 255, 0.4)" stroke-width="2"/>
+    <line x1="-320" y1="-80" x2="320" y2="-80" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1"/>
+    <!-- 玻璃板网格 (拟物数位屏细节) -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1"/>
+    </pattern>
+    <rect x="-320" y="-90" width="630" height="180" rx="5" fill="url(#grid)"/>
+    <!-- 玻璃边缘高光 -->
+    <rect x="-328" y="-98" width="656" height="196" rx="13" fill="none" stroke="rgba(255, 255, 255, 0.8)" stroke-width="1"/>
+  </g>
+
+  <!-- ==================== 玻璃上的绘画痕迹 ==================== -->
+  <g transform="translate(500, 480) rotate(-5)">
+    <!-- 发光线条 -->
+    <path d="M -200,-50 C -100,-80 0,-20 100,-60" fill="none" stroke="#00e5ff" stroke-width="6" stroke-linecap="round" filter="url(#glowBlue)"/>
+    <path d="M -150,0 C -50,30 50,-30 150,20" fill="none" stroke="#ff4081" stroke-width="6" stroke-linecap="round" filter="url(#glowPink)"/>
+    <path d="M -100,-80 C 0,-10 100,50 200,-20" fill="none" stroke="#ffbd2e" stroke-width="6" stroke-linecap="round" filter="url(#glowBlue)"/>
+    
+    <!-- 线条的实心核心 -->
+    <path d="M -200,-50 C -100,-80 0,-20 100,-60" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    <path d="M -150,0 C -50,30 50,-30 150,20" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    <path d="M -100,-80 C 0,-10 100,50 200,-20" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- ==================== 硬件：键盘与鼠标 ==================== -->
+  
+  <!-- 键盘区域 -->
+  <g transform="translate(180, 560)">
+    <!-- 键盘底座 -->
+    <rect x="0" y="0" width="550" height="150" rx="10" fill="url(#kbBase)" filter="url(#dropShadow)"/>
+    <!-- 键盘垫手托 -->
+    <rect x="0" y="130" width="550" height="20" rx="5" fill="#1a1c21"/>
+    <rect x="0" y="0" width="550" height="5" fill="rgba(255,255,255,0.05)"/>
+    
+    <!-- 按键行 1 (Y=20) -->
+    <g transform="translate(15, 20)">
+      <use href="#key" x="0" y="0"/><use href="#key" x="35" y="0"/><use href="#key" x="70" y="0"/><use href="#key" x="105" y="0"/>
+      <use href="#key" x="140" y="0"/><use href="#key" x="175" y="0"/><use href="#key" x="210" y="0"/><use href="#key" x="245" y="0"/>
+      <use href="#key" x="280" y="0"/><use href="#key" x="315" y="0"/><use href="#key" x="350" y="0"/><use href="#key" x="385" y="0"/>
+      <use href="#key" x="420" y="0"/><use href="#key" x="455" y="0"/>
+    </g>
+    <!-- 按键行 2 (Y=55) -->
+    <g transform="translate(30, 55)">
+      <use href="#key" x="0" y="0"/><use href="#key" x="35" y="0"/><use href="#key" x="70" y="0"/><use href="#key" x="105" y="0"/>
+      <use href="#key" x="140" y="0"/><use href="#key" x="175" y="0"/><use href="#key" x="210" y="0"/><use href="#key" x="245" y="0"/>
+      <use href="#key" x="280" y="0"/><use href="#key" x="315" y="0"/><use href="#key" x="350" y="0"/><use href="#key" x="385" y="0"/>
+      <use href="#key" x="420" y="0"/>
+    </g>
+    <!-- 按键行 3 (Y=90) -->
+    <g transform="translate(45, 90)">
+      <use href="#key" x="0" y="0"/><use href="#key" x="35" y="0"/><use href="#key" x="70" y="0"/><use href="#key" x="105" y="0"/>
+      <use href="#key" x="140" y="0"/><use href="#key" x="175" y="0"/><use href="#key" x="210" y="0"/><use href="#key" x="245" y="0"/>
+      <use href="#key" x="280" y="0"/><use href="#key" x="315" y="0"/><use href="#key" x="350" y="0"/>
+    </g>
+    <!-- 按键行 4 (Y=125) -->
+    <g transform="translate(25, 125)">
+      <use href="#key" x="0" y="0" transform="scale(1.2 1)"/>
+      <use href="#key" x="45" y="0"/>
+      <use href="#key" x="80" y="0"/>
+      <!-- 大空格键 -->
+      <rect x="115" y="0" width="200" height="30" rx="5" fill="url(#keyGrad)" filter="url(#dropShadowLight)"/>
+      <use href="#key" x="325" y="0"/>
+      <use href="#key" x="360" y="0"/>
+      <use href="#key" x="395" y="0" transform="scale(1.2 1)"/>
+    </g>
+    
+    <!-- 发光的背光效果 (RGB 键盘光效) -->
+    <rect x="15" y="20" width="520" height="135" rx="5" fill="none" stroke="rgba(0, 200, 255, 0.3)" stroke-width="1"/>
+    <rect x="15" y="20" width="520" height="135" rx="5" fill="none" stroke="rgba(255, 0, 200, 0.2)" stroke-width="2"/>
+  </g>
+
+  <!-- 鼠标区域 -->
+  <g transform="translate(780, 600) rotate(15)">
+    <!-- 鼠标垫 -->
+    <ellipse cx="0" cy="0" rx="100" ry="80" fill="#1a1c21" filter="url(#dropShadow)"/>
+    <ellipse cx="0" cy="0" rx="95" ry="75" fill="#2a2e35"/>
+    <ellipse cx="0" cy="0" rx="90" ry="70" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+    
+    <!-- 鼠标本体 -->
+    <rect x="-35" y="-50" width="70" height="90" rx="35" fill="url(#mouseGrad)" filter="url(#dropShadow)"/>
+    <!-- 鼠标高光 -->
+    <path d="M -25,-40 Q 0,-45 25,-40" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="4" stroke-linecap="round"/>
+    <!-- 鼠标左右键分割线 -->
+    <line x1="0" y1="-35" x2="0" y2="10" stroke="#0b0c0e" stroke-width="4"/>
+    <!-- 滚轮 -->
+    <rect x="-10" y="-10" width="20" height="10" rx="5" fill="#00e5ff" filter="url(#dropShadowLight)"/>
+    <rect x="-10" y="-10" width="20" height="3" fill="rgba(255,255,255,0.4)"/>
+    <!-- 鼠标底边光效 (RGB) -->
+    <path d="M -30,-35 A 35 35 0 0 1 30,-35" fill="none" stroke="#ff4081" stroke-width="4" stroke-linecap="round" filter="url(#glowPink)"/>
+  </g>
+
+  <!-- ==================== 主角：章鱼 ==================== -->
+  
+  <!-- 章鱼后侧触手 (位于玻璃板之后，显示器之前) -->
+  <!-- 触手 A (右侧后方) -->
+  <path d="M 600,300 C 650,280 700,320 720,380 C 730,420 710,480 680,520" fill="none" stroke="url(#tentacleGrad)" stroke-width="24" stroke-linecap="round" filter="url(#dropShadow)"/>
+  <path d="M 600,300 C 650,280 700,320 720,380 C 730,420 710,480 680,520" fill="none" stroke="#ff7eb3" stroke-width="8" stroke-dasharray="12 18" stroke-linecap="round"/>
+  
+  <!-- 触手 B (左侧后方, 举起) -->
+  <path d="M 300,300 C 250,280 180,220 180,150 C 180,100 220,80 260,100" fill="none" stroke="url(#tentacleGrad)" stroke-width="20" stroke-linecap="round" filter="url(#dropShadow)"/>
+  <path d="M 300,300 C 250,280 180,220 180,150 C 180,100 220,80 260,100" fill="none" stroke="#ff7eb3" stroke-width="6" stroke-dasharray="10 15" stroke-linecap="round"/>
+
+  <!-- 章鱼身体 (头部) -->
+  <g transform="translate(480, 360)">
+    <!-- 身体阴影 -->
+    <ellipse cx="0" cy="20" rx="90" ry="80" fill="rgba(0,0,0,0.4)" filter="url(#dropShadow)"/>
+    <!-- 身体主要形状 -->
+    <path d="M -80,20 C -100,-60 -40,-120 40,-120 C 100,-120 120,-50 100,30 C 90,80 20,100 -20,100 C -60,100 -70,60 -80,20 Z" fill="url(#octoBody)"/>
+    <!-- 身体高光 (拟物光泽) -->
+    <path d="M -60,-60 C -40,-100 0,-110 30,-90" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="12" stroke-linecap="round"/>
+    <path d="M 40,-20 C 50,10 30,40 10,50" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- 眼睛 (拟物大眼) -->
+    <g transform="translate(-30, -30)">
+      <!-- 眼白 -->
+      <ellipse cx="0" cy="0" rx="30" ry="35" fill="#ffffff" filter="url(#dropShadowLight)"/>
+      <!-- 虹膜 -->
+      <ellipse cx="5" cy="5" rx="15" ry="20" fill="#a61a4c"/>
+      <!-- 瞳孔 -->
+      <ellipse cx="8" cy="8" rx="10" ry="15" fill="#0d0805"/>
+      <!-- 眼睛高光 -->
+      <circle cx="2" cy="0" r="6" fill="#ffffff"/>
+      <circle cx="12" cy="15" r="3" fill="#ffffff"/>
+      <!-- 上眼睫毛 (拟物风格) -->
+      <path d="M -20,-30 Q 0,-45 20,-30" fill="none" stroke="#a61a4c" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    
+    <g transform="translate(40, -30)">
+      <!-- 眼白 -->
+      <ellipse cx="0" cy="0" rx="30" ry="35" fill="#ffffff" filter="url(#dropShadowLight)"/>
+      <!-- 虹膜 -->
+      <ellipse cx="-5" cy="5" rx="15" ry="20" fill="#a61a4c"/>
+      <!-- 瞳孔 -->
+      <ellipse cx="-8" cy="8" rx="10" ry="15" fill="#0d0805"/>
+      <!-- 眼睛高光 -->
+      <circle cx="-2" cy="0" r="6" fill="#ffffff"/>
+      <circle cx="-12" cy="15" r="3" fill="#ffffff"/>
+      <!-- 上眼睫毛 -->
+      <path d="M -20,-30 Q 0,-45 20,-30" fill="none" stroke="#a61a4c" stroke-width="6" stroke-linecap="round"/>
+    </g>
+    
+    <!-- 嘴巴 (微笑) -->
+    <path d="M -15,15 Q 0,25 15,15" fill="none" stroke="#a61a4c" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- ==================== 章鱼前侧触手 (操作外设) ==================== -->
+  
+  <!-- 触手 1 (左侧前方 - 操控笔) -->
+  <g>
+    <path d="M 420,400 C 350,420 300,400 250,420 C 200,440 160,460 140,420" fill="none" stroke="url(#tentacleGrad)" stroke-width="22" stroke-linecap="round" filter="url(#dropShadow)"/>
+    <path d="M 420,400 C 350,420 300,400 250,420 C 200,440 160,460 140,420" fill="none" stroke="#ff7eb3" stroke-width="8" stroke-dasharray="12 18" stroke-linecap="round"/>
+    <!-- 触手尖端握住笔 -->
+    <path d="M 160,445 C 140,430 130,410 140,390" fill="none" stroke="url(#tentacleGrad)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M 160,445 C 140,430 130,410 140,390" fill="none" stroke="#ff7eb3" stroke-width="4" stroke-dasharray="8 12" stroke-linecap="round"/>
+  </g>
+
+  <!-- 笔 (被章鱼触手握住) -->
+  <g transform="translate(100, 420) rotate(-45)">
+    <!-- 笔身阴影 -->
+    <rect x="0" y="-10" width="140" height="16" rx="8" fill="rgba(0,0,0,0.6)" filter="url(#dropShadow)"/>
+    <!-- 笔身主体 -->
+    <rect x="0" y="-8" width="130" height="16" rx="8" fill="url(#penBody)"/>
+    <!-- 笔身金属装饰 -->
+    <rect x="0" y="-8" width="20" height="16" rx="8" fill="#c0c5ce"/>
+    <rect x="15" y="-8" width="5" height="16" fill="#9aa2b0"/>
+    <!-- 笔尖 -->
+    <polygon points="130,-8 150,0 130,8" fill="url(#penTip)"/>
+    <!-- 笔夹 -->
+    <rect x="20" y="-12" width="30" height="4" rx="2" fill="#9aa2b0"/>
+    <!-- 笔身高光 -->
+    <rect x="25" y="-5" width="100" height="3" rx="1.5" fill="rgba(255,255,255,0.8)"/>
+  </g>
+
+  <!-- 触手 2 (中间偏左 - 键盘) -->
+  <g>
+    <path d="M 440,430 C 400,480 350,550 280,600 C 240,630 200,620 180,600" fill="none" stroke="url(#tentacleGrad)" stroke-width="26" stroke-linecap="round" filter="url(#dropShadow)"/>
+    <path d="M 440,430 C 400,480 350,550 280,600 C 240,630 200,620 180,600" fill="none" stroke="#ff7eb3" stroke-width="10" stroke-dasharray="15 25" stroke-linecap="round"/>
+    <!-- 触手尖端动作 (按下按键) -->
+    <circle cx="180" cy="600" r="15" fill="#a61a4c"/>
+    <circle cx="180" cy="600" r="8" fill="#ff7eb3"/>
+    <!-- 被按下的按键指示 -->
+    <rect x="160" y="585" width="40" height="30" rx="5" fill="url(#keyPress)" filter="url(#dropShadowLight)"/>
+  </g>
+
+  <!-- 触手 3 (右侧前方 - 鼠标) -->
+  <g>
+    <path d="M 540,430 C 600,480 680,550 730,580 C 780,610 800,600 810,580" fill="none" stroke="url(#tentacleGrad)" stroke-width="24" stroke-linecap="round" filter="url(#dropShadow)"/>
+    <path d="M 540,430 C 600,480 680,550 730,580 C 780,610 800,600 810,580" fill="none" stroke="#ff7eb3" stroke-width="8" stroke-dasharray="12 20" stroke-linecap="round"/>
+    <!-- 触手尖端动作 (点击鼠标) -->
+    <circle cx="810" cy="580" r="12" fill="#a61a4c"/>
+    <!-- 鼠标左键点击指示 -->
+    <path d="M 780,570 L 800,570 L 800,580 L 780,580 Z" fill="rgba(0, 200, 255, 0.4)" filter="url(#glowBlue)"/>
+  </g>
+
+  <!-- 触手 4 (左侧中间 - 悬浮) -->
+  <g>
+    <path d="M 460,420 C 400,380 340,340 300,360 C 260,380 280,430 320,440" fill="none" stroke="url(#tentacleGrad)" stroke-width="18" stroke-linecap="round" filter="url(#dropShadow)"/>
+    <path d="M 460,420 C 400,380 340,340 300,360 C 260,380 280,430 320,440" fill="none" stroke="#ff7eb3" stroke-width="6" stroke-dasharray="10 15" stroke-linecap="round"/>
+  </g>
+
+  <!-- 触手 5 (右侧中间 - 悬浮) -->
+  <g>
+    <path d="M 520,420 C 580,380 640,380 680,420 C 720,460 700,520 660,530" fill="none" stroke="url(#tentacleGrad)" stroke-width="20" stroke-linecap="round" filter="url(#dropShadow)"/>
+    <path d="M 520,420 C 580,380 640,380 680,420 C 720,460 700,520 660,530" fill="none" stroke="#ff7eb3" stroke-width="6" stroke-dasharray="10 15" stroke-linecap="round"/>
+  </g>
+
+  <!-- ==================== 前景细节 ==================== -->
+  
+  <!-- 玻璃板前方的反射光晕 -->
+  <ellipse cx="500" cy="650" rx="250" ry="80" fill="rgba(0, 200, 255, 0.05)" filter="url(#glowBlue)"/>
+  
+  <!-- 键盘区域的氛围光 -->
+  <ellipse cx="450" cy="700" rx="200" ry="60" fill="rgba(255, 0, 200, 0.03)" filter="url(#glowPink)"/>
+
+  <!-- 细小的粒子/灰尘效果 (增强拟物感) -->
+  <circle cx="200" cy="300" r="1.5" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="800" cy="200" r="1" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="700" cy="400" r="2" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="150" cy="500" r="1.5" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="900" cy="600" r="1" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="300" cy="150" r="2" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="600" cy="250" r="1.5" fill="rgba(255,255,255,0.2)"/>
+  
+</svg>

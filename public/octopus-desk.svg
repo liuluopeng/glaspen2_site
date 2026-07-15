@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 800" width="100%" height="100%">
+  <defs>
+    <style>
+      /* pen draws a stroke on the glass */
+      @keyframes drawStroke { 0%{stroke-dashoffset:260} 60%{stroke-dashoffset:0} 100%{stroke-dashoffset:0} }
+      .anim-stroke{ stroke-dasharray:260; stroke-dashoffset:260; animation: drawStroke 6s ease-out infinite; }
+      /* the live ink dot blinks as the pen lifts/lands */
+      @keyframes inkBlink { 0%,86%,100%{opacity:.95} 91%{opacity:.25} }
+      .anim-ink{ animation: inkBlink 6s linear infinite; }
+      /* pen nudges along its trace */
+      @keyframes penTrace{ 0%{transform:translate(0,0) rotate(0)} 18%{transform:translate(8px,6px) rotate(2deg)} 45%{transform:translate(14px,-3px) rotate(3deg)} 70%{transform:translate(3px,9px) rotate(-1deg)} 100%{transform:translate(0,0) rotate(0)} }
+      .anim-pen{ animation: penTrace 6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      /* cursor on screen follows the mouse */
+      @keyframes cursorMove{ 0%{transform:translate(0,0)} 25%{transform:translate(58px,14px)} 50%{transform:translate(24px,40px)} 75%{transform:translate(-34px,22px)} 100%{transform:translate(0,0)} }
+      .anim-cursor{ animation: cursorMove 6s ease-in-out infinite; }
+      /* mouse sways in sync with cursor */
+      @keyframes mouseSway{ 0%,100%{transform:translate(0,0) rotate(0)} 25%{transform:translate(4px,2px) rotate(1.2deg)} 50%{transform:translate(-3px,4px) rotate(-.6deg)} 75%{transform:translate(5px,-1px) rotate(.6deg)} }
+      .anim-mouse{ animation: mouseSway 6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      /* a keyboard key presses */
+      @keyframes keyPress{ 0%,58%,100%{transform:translateY(0)} 66%{transform:translateY(3px)} 76%{transform:translateY(0)} 84%{transform:translateY(2.4px)} 93%{transform:translateY(0)} }
+      .anim-key{ animation: keyPress 6.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      /* octopus gently bobs */
+      @keyframes bob{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+      .anim-bob{ animation: bob 4.5s ease-in-out infinite; }
+      /* glass floats slightly, stays parallel to monitor */
+      @keyframes gfloat{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+      .anim-glass{ animation: gfloat 7s ease-in-out infinite; }
+      /* screen ambient scan */
+      @keyframes scan{ 0%,100%{opacity:.10} 50%{opacity:.22} }
+      .anim-scan{ animation: scan 8s ease-in-out infinite; }
+    </style>
+
+    <!-- room -->
+    <radialGradient id="wall" cx="42%" cy="36%" r="78%">
+      <stop offset="0%" stop-color="#f1e9dc"/><stop offset="60%" stop-color="#ddd3c5"/><stop offset="100%" stop-color="#c0b5a3"/></radialGradient>
+    <linearGradient id="desk" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c5438"/><stop offset="100%" stop-color="#3c2516"/></linearGradient>
+    <linearGradient id="deskTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8c603f"/><stop offset="100%" stop-color="#603e28"/></linearGradient>
+
+    <!-- curved monitor -->
+    <linearGradient id="bezel" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a3c43"/><stop offset="50%" stop-color="#1d1e22"/><stop offset="100%" stop-color="#0c0c0e"/></linearGradient>
+    <linearGradient id="bezelSide" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#15161a"/><stop offset="100%" stop-color="#2c2e34"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#15233d"/><stop offset="100%" stop-color="#0a1122"/></linearGradient>
+    <linearGradient id="curveShade" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#000" stop-opacity=".5"/><stop offset="14%" stop-color="#000" stop-opacity="0"/><stop offset="86%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".5"/></linearGradient>
+    <radialGradient id="screenGlow" cx="50%" cy="42%" r="62%"><stop offset="0%" stop-color="#3aa0ff" stop-opacity=".18"/><stop offset="100%" stop-color="#3aa0ff" stop-opacity="0"/></radialGradient>
+
+    <!-- glass: same size as the curved screen, transparent, suspended in front -->
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#cfe6ff" stop-opacity=".22"/><stop offset="35%" stop-color="#fff" stop-opacity=".06"/><stop offset="55%" stop-color="#bcd9ff" stop-opacity=".13"/><stop offset="80%" stop-color="#fff" stop-opacity=".03"/><stop offset="100%" stop-color="#9fc4ff" stop-opacity=".18"/></linearGradient>
+    <linearGradient id="glassRim" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#eaf4ff" stop-opacity=".95"/><stop offset="50%" stop-color="#cfe3ff" stop-opacity=".5"/><stop offset="100%" stop-color="#a9c6ec" stop-opacity=".85"/></linearGradient>
+
+    <!-- devices -->
+    <linearGradient id="key" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#46474b"/><stop offset="100%" stop-color="#1c1d20"/></linearGradient>
+    <linearGradient id="kbCase" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e2f33"/><stop offset="100%" stop-color="#0e0e10"/></linearGradient>
+    <radialGradient id="mouseBody" cx="0.5" cy="0.28" r="0.72"><stop offset="0%" stop-color="#f2f2f2"/><stop offset="100%" stop-color="#989898"/></radialGradient>
+    <linearGradient id="penBody" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#555"/><stop offset="30%" stop-color="#a8a8a8"/><stop offset="52%" stop-color="#e4e4e4"/><stop offset="72%" stop-color="#8a8a8a"/><stop offset="100%" stop-color="#3a3a3a"/></linearGradient>
+    <linearGradient id="penGrip" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2b6cb0"/><stop offset="100%" stop-color="#143b6b"/></linearGradient>
+
+    <filter id="octoShadow" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000" flood-opacity="0.14"/></filter>
+    <filter id="devShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000" flood-opacity="0.34"/></filter>
+    <filter id="glassShadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="10" dy="16" stdDeviation="16" flood-color="#000" flood-opacity="0.32"/></filter>
+    <filter id="monShadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="6" dy="20" stdDeviation="18" flood-color="#000" flood-opacity="0.36"/></filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+
+    <!-- clipped screen (curved face of the monitor) -->
+    <!-- front face: left edge taller (closer), right edge shorter (receding = the side we see) -->
+    <!-- coordinates chosen so glass (same shape, shifted left ~115) reads as floating in front -->
+    <clipPath id="screenClip">
+      <path d="M818 156 Q984 138 1148 160 L1148 412 Q984 434 818 412 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- ===================== ROOM ===================== -->
+  <rect x="0" y="0" width="1300" height="800" fill="url(#wall)"/>
+  <ellipse cx="300" cy="250" rx="340" ry="180" fill="#fff" opacity="0.05"/>
+  <ellipse cx="1060" cy="200" rx="280" ry="150" fill="#fff" opacity="0.04"/>
+  <rect x="0" y="560" width="1300" height="240" fill="url(#desk)"/>
+  <rect x="0" y="552" width="1300" height="10" fill="url(#deskTop)"/>
+  <line x1="0" y1="552" x2="1300" y2="552" stroke="#9a6e4c" stroke-width="1.5" opacity="0.6"/>
+
+
+  <!-- ===================== CONNECTED OCTOCAT (6 tentacles grown from mantle) ===================== -->
+  <g filter="url(#octoShadow)">
+    <g class="anim-bob">
+      <!-- TENTACLES drawn first so head overlaps their tops, anchoring them to the body -->
+    <path d="M 152.9 455.4 L 141.8 452.2 L 132.9 449.0 L 126.3 445.7 L 122.4 442.9 L 120.8 441.1 L 120.4 440.2 L 120.8 438.2 L 123.2 434.1 L 128.7 428.6 L 137.2 422.1 L 148.8 415.0 L 163.5 407.2 L 181.3 398.9 L 202.4 390.0 L 226.7 380.6 L 254.4 370.6 L 285.6 360.0 L 320.3 348.9 L 358.7 337.1 L 400.7 324.7 L 446.7 311.7 L 496.5 298.0 L 550.4 283.7 L 608.4 268.6 L 670.6 252.9 L 737.1 236.4 L 734.9 227.6 L 668.3 243.6 L 605.9 258.9 L 547.8 273.5 L 493.7 287.4 L 443.6 300.6 L 397.5 313.2 L 355.1 325.1 L 316.5 336.4 L 281.4 347.2 L 249.9 357.3 L 221.7 366.9 L 196.9 376.0 L 175.2 384.6 L 156.6 392.8 L 140.8 400.5 L 127.9 407.9 L 117.6 415.1 L 109.6 422.3 L 104.0 430.2 L 101.4 439.3 L 102.9 448.8 L 107.9 456.7 L 115.2 462.9 L 124.1 468.1 L 134.7 472.6 L 147.1 476.6 Z" fill="#1a1a1a"/>
+    <path d="M 150.0 466.0 C 40.0 436.0 140.0 376.0 736.0 232.0" fill="none" stroke="#3a3a3a" stroke-width="1.8" stroke-linecap="round" opacity="0.22"/>
+    <path class="anim-mouse" d="M 145.5 455.9 L 135.2 461.6 L 127.0 468.2 L 121.2 476.3 L 118.9 486.1 L 121.0 495.8 L 126.5 503.9 L 134.1 510.9 L 144.0 517.4 L 156.0 523.6 L 170.4 529.8 L 187.2 535.9 L 206.3 541.9 L 227.9 548.0 L 251.9 554.0 L 278.3 559.9 L 307.2 565.7 L 338.5 571.5 L 372.3 577.1 L 408.5 582.5 L 447.1 587.8 L 488.2 593.0 L 531.7 597.9 L 577.5 602.6 L 625.8 607.0 L 676.5 611.1 L 729.6 615.0 L 730.4 605.0 L 677.4 600.7 L 626.8 596.1 L 578.7 591.2 L 533.0 586.1 L 489.7 580.8 L 448.9 575.2 L 410.5 569.5 L 374.5 563.6 L 341.1 557.5 L 310.1 551.4 L 281.6 545.2 L 255.6 538.9 L 232.1 532.5 L 211.2 526.2 L 192.8 519.9 L 177.0 513.7 L 163.9 507.6 L 153.4 501.7 L 145.8 496.2 L 141.1 491.4 L 139.2 488.1 L 139.1 486.6 L 139.6 485.6 L 141.7 483.3 L 146.6 479.9 L 154.5 476.1 Z" fill="#1a1a1a"/>
+    <path d="M 150.0 466.0 C 60.0 506.0 260.0 576.0 730.0 610.0" fill="none" stroke="#3a3a3a" stroke-width="1.8" stroke-linecap="round" opacity="0.22"/>
+    <path d="M 139.9 461.7 L 137.3 473.3 L 138.7 485.0 L 143.9 495.7 L 151.9 505.2 L 162.4 513.9 L 175.3 522.0 L 190.5 529.9 L 208.2 537.4 L 228.3 544.7 L 250.8 551.8 L 275.6 558.6 L 302.7 565.2 L 332.1 571.6 L 363.7 577.7 L 397.5 583.5 L 433.5 588.9 L 471.5 594.1 L 511.6 598.9 L 553.7 603.4 L 597.7 607.5 L 643.6 611.2 L 691.4 614.5 L 740.9 617.3 L 792.2 619.7 L 845.2 621.6 L 899.9 623.0 L 900.1 613.0 L 845.6 611.1 L 792.7 608.8 L 741.6 605.9 L 692.2 602.6 L 644.6 598.9 L 598.9 594.8 L 555.1 590.2 L 513.2 585.3 L 473.4 580.1 L 435.7 574.5 L 400.0 568.6 L 366.6 562.4 L 335.4 555.9 L 306.5 549.2 L 280.0 542.3 L 255.8 535.2 L 234.2 527.9 L 215.1 520.4 L 198.7 512.9 L 185.0 505.5 L 174.1 498.1 L 166.2 491.0 L 161.3 484.6 L 159.0 479.2 L 158.7 474.8 L 160.1 470.3 Z" fill="#1a1a1a"/>
+    <path d="M 150.0 466.0 C 120.0 536.0 420.0 606.0 900.0 618.0" fill="none" stroke="#3a3a3a" stroke-width="1.8" stroke-linecap="round" opacity="0.22"/>
+    <path d="M 147.5 455.3 L 128.3 460.4 L 110.5 465.8 L 94.2 471.6 L 79.3 477.6 L 65.6 483.9 L 53.3 490.4 L 42.2 497.2 L 32.4 504.1 L 23.7 511.3 L 16.2 518.5 L 9.7 525.9 L 4.4 533.4 L 0.2 540.9 L -3.0 548.5 L -5.1 556.0 L -6.2 563.5 L -6.4 570.7 L -5.6 577.8 L -3.9 584.6 L -1.4 591.0 L 1.9 597.0 L 5.8 602.7 L 10.3 607.9 L 15.5 612.6 L 21.1 616.9 L 27.2 620.7 L 32.8 611.3 L 27.8 607.7 L 23.3 603.8 L 19.4 599.6 L 16.0 595.2 L 13.2 590.5 L 11.1 585.7 L 9.5 580.7 L 8.7 575.7 L 8.4 570.5 L 8.9 565.2 L 10.1 559.8 L 12.0 554.2 L 14.8 548.6 L 18.5 542.8 L 23.1 537.0 L 28.8 531.0 L 35.5 525.1 L 43.4 519.2 L 52.4 513.3 L 62.7 507.5 L 74.2 501.8 L 87.1 496.3 L 101.3 491.0 L 116.9 486.0 L 134.0 481.2 L 152.5 476.7 Z" fill="#1a1a1a"/>
+    <path d="M 150.0 466.0 C -20.0 506.0 -20.0 586.0 30.0 616.0" fill="none" stroke="#3a3a3a" stroke-width="1.8" stroke-linecap="round" opacity="0.22"/>
+    <path d="M 149.5 455.0 L 126.8 456.7 L 105.5 458.8 L 85.6 461.5 L 67.0 464.7 L 49.6 468.3 L 33.5 472.4 L 18.6 476.9 L 4.9 481.8 L -7.6 487.1 L -19.0 492.9 L -29.3 499.0 L -38.5 505.5 L -46.7 512.3 L -53.8 519.5 L -59.9 526.9 L -64.9 534.7 L -69.0 542.7 L -72.0 550.8 L -74.1 559.2 L -75.2 567.6 L -75.5 576.0 L -74.9 584.5 L -73.5 593.0 L -71.4 601.4 L -68.5 609.8 L -65.1 618.2 L -54.9 613.8 L -57.8 606.0 L -59.9 598.3 L -61.4 590.8 L -62.2 583.3 L -62.3 576.1 L -61.7 569.0 L -60.4 562.1 L -58.4 555.4 L -55.5 548.9 L -51.9 542.6 L -47.5 536.5 L -42.1 530.5 L -35.8 524.7 L -28.5 519.1 L -20.2 513.7 L -10.8 508.6 L -0.2 503.8 L 11.5 499.2 L 24.4 495.0 L 38.5 491.2 L 53.8 487.7 L 70.5 484.7 L 88.5 482.0 L 107.8 479.9 L 128.5 478.2 L 150.5 477.0 Z" fill="#1a1a1a"/>
+    <path d="M 150.0 466.0 C -50.0 476.0 -90.0 546.0 -60.0 616.0" fill="none" stroke="#3a3a3a" stroke-width="1.8" stroke-linecap="round" opacity="0.22"/>
+    <path d="M 145.6 455.9 L 127.6 464.6 L 111.4 473.5 L 96.9 482.6 L 83.9 492.0 L 72.3 501.6 L 62.2 511.3 L 53.4 521.1 L 45.7 531.0 L 39.2 540.9 L 33.7 550.8 L 29.1 560.6 L 25.3 570.2 L 22.1 579.7 L 19.6 589.0 L 17.5 598.0 L 15.8 606.8 L 14.4 615.2 L 13.0 623.3 L 11.7 631.0 L 10.4 638.3 L 8.9 645.2 L 7.2 651.5 L 5.1 657.4 L 2.6 662.8 L -0.3 667.7 L -3.9 672.1 L 3.9 679.9 L 8.8 674.6 L 12.9 668.7 L 16.3 662.4 L 19.2 655.7 L 21.5 648.6 L 23.6 641.3 L 25.4 633.8 L 27.2 626.0 L 28.9 618.0 L 30.7 609.9 L 32.8 601.6 L 35.1 593.2 L 37.9 584.8 L 41.1 576.3 L 44.9 567.7 L 49.3 559.2 L 54.6 550.6 L 60.7 542.1 L 67.8 533.5 L 76.0 525.0 L 85.4 516.6 L 96.1 508.2 L 108.2 500.0 L 121.9 491.8 L 137.3 483.9 L 154.4 476.1 Z" fill="#1a1a1a"/>
+    <path d="M 150.0 466.0 C -10.0 536.0 40.0 636.0 0.0 676.0" fill="none" stroke="#3a3a3a" stroke-width="1.8" stroke-linecap="round" opacity="0.22"/>
+      <!-- HEAD / MANTLE body: black rounded dome -->
+      <ellipse cx="130" cy="360" rx="135" ry="118" fill="#151515"/>
+      <!-- slight top highlight -->
+      <ellipse cx="100" cy="300" rx="95" ry="60" fill="#2a2a2a" opacity="0.6"/>
+      <!-- skirt base that visually merges with where tentacles grow -->
+      <path d="M -8 458 C 24 470 130 476 175 472 C 210 468 250 456 286 436
+               C 270 482 120 490 8 472 C -2 470 -6 466 -8 458 Z" fill="#151515"/>
+      <!-- CREAM FACE -->
+      <path d="M60 300 C60 250 200 250 200 300 C200 360 60 360 60 300 Z" fill="#f3c9b0"/>
+      <!-- cheeks -->
+      <ellipse cx="78" cy="318" rx="22" ry="16" fill="#f7d6c0"/>
+      <ellipse cx="182" cy="318" rx="22" ry="16" fill="#f7d6c0"/>
+      <!-- eyes -->
+      <ellipse cx="98"  cy="304" rx="6.5" ry="9" fill="#0a0a0a"/>
+      <ellipse cx="162" cy="304" rx="6.5" ry="9" fill="#0a0a0a"/>
+      <circle cx="100" cy="301" r="2.2" fill="#fff"/>
+      <circle cx="164" cy="301" r="2.2" fill="#fff"/>
+      <!-- small smile -->
+      <path d="M112 332 Q130 344 148 332" fill="none" stroke="#b76550" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+
+
+  <!-- ===================== MONITOR (RIGHT, 3/4 side view, curved) ===================== -->
+  <!-- the right side of the monitor (depth, because the camera sees it from the side) -->
+  <g filter="url(#monShadow)">
+    <!-- side/back shell -->
+    <path d="M1148 160 L1200 144 L1200 428 L1148 412 Z" fill="url(#bezelSide)" stroke="#000" stroke-width="0.5"/>
+    <!-- stand neck -->
+    <path d="M974 418 L1006 418 L1002 552 L978 552 Z" fill="#3a3c44"/>
+    <path d="M974 418 L1006 418 L1005 424 L975 424 Z" fill="#5a5d66"/>
+    <rect x="924" y="548" width="132" height="10" rx="5" fill="#2a2c32"/>
+    <rect x="924" y="548" width="132" height="3.5" rx="1.7" fill="#454852"/>
+
+    <!-- front bezel (curved) -->
+    <path d="M810 150 Q984 130 1156 154 L1156 416 Q984 440 810 416 Z" fill="url(#bezel)" stroke="#0a0a0c" stroke-width="1"/>
+    <!-- curved screen face -->
+    <path d="M818 156 Q984 138 1148 160 L1148 412 Q984 434 818 412 Z" fill="url(#screen)"/>
+    <path d="M818 156 Q984 138 1148 160 L1148 412 Q984 434 818 412 Z" fill="url(#screenGlow)"/>
+    <path class="anim-scan" d="M818 156 Q984 138 1148 160 L1148 412 Q984 434 818 412 Z" fill="#3aa0ff" opacity="0.12"/>
+
+    <!-- ===== screen content (clipped to curved face) ===== -->
+    <g clip-path="url(#screenClip)">
+      <rect x="818" y="150" width="332" height="286" fill="#101a2e"/>
+      <!-- menu bar -->
+      <path d="M818 156 Q984 138 1148 160 L1148 182 Q984 166 818 182 Z" fill="#1b2740"/>
+      <circle cx="832" cy="170" r="3" fill="#ff5f56"/><circle cx="844" cy="170" r="3" fill="#ffbd2e"/><circle cx="856" cy="170" r="3" fill="#27c93f"/>
+      <rect x="870" y="167" width="64" height="5" rx="2.5" fill="#fff" opacity="0.18"/>
+      <rect x="1102" y="168" width="36" height="5" rx="2.5" fill="#fff" opacity="0.12"/>
+
+      <!-- code editor -->
+      <rect x="828" y="196" width="150" height="150" rx="6" fill="#171927" stroke="#2c2f3d" stroke-width="0.9"/>
+      <rect x="828" y="196" width="150" height="18" rx="6" fill="#22253a"/>
+      <rect x="828" y="210" width="150" height="6" fill="#171927"/>
+      <rect x="835" y="203" width="46" height="3.4" rx="1.7" fill="#7c8cff" opacity="0.85"/>
+      <g fill="#44506a"><!-- line numbers -->
+        <rect x="831" y="222" width="5" height="2.6"/><rect x="831" y="230" width="5" height="2.6"/>
+        <rect x="831" y="238" width="5" height="2.6"/><rect x="831" y="246" width="5" height="2.6"/>
+        <rect x="831" y="254" width="5" height="2.6"/><rect x="831" y="262" width="5" height="2.6"/>
+        <rect x="831" y="270" width="5" height="2.6"/><rect x="831" y="278" width="5" height="2.6"/>
+        <rect x="831" y="286" width="5" height="2.6"/><rect x="831" y="294" width="5" height="2.6"/>
+        <rect x="831" y="302" width="5" height="2.6"/><rect x="831" y="310" width="5" height="2.6"/>
+        <rect x="831" y="318" width="5" height="2.6"/><rect x="831" y="326" width="5" height="2.6"/>
+      </g>
+      <!-- code lines -->
+      <g rx="1.3">
+        <rect x="842" y="222" width="54" height="2.7" rx="1.3" fill="#7c3aed" opacity="0.75"/>
+        <rect x="842" y="230" width="80" height="2.7" rx="1.3" fill="#e6e6e6" opacity="0.55"/>
+        <rect x="842" y="238" width="38" height="2.7" rx="1.3" fill="#10b981" opacity="0.8"/>
+        <rect x="886" y="238" width="34" height="2.7" rx="1.3" fill="#e6e6e6" opacity="0.45"/>
+        <rect x="842" y="246" width="66" height="2.7" rx="1.3" fill="#f59e0b" opacity="0.7"/>
+        <rect x="842" y="254" width="48" height="2.7" rx="1.3" fill="#e6e6e6" opacity="0.5"/>
+        <rect x="842" y="262" width="88" height="2.7" rx="1.3" fill="#60a5fa" opacity="0.7"/>
+        <rect x="842" y="270" width="30" height="2.7" rx="1.3" fill="#e6e6e6" opacity="0.55"/>
+        <rect x="842" y="278" width="60" height="2.7" rx="1.3" fill="#f472b6" opacity="0.7"/>
+        <rect x="842" y="286" width="74" height="2.7" rx="1.3" fill="#e6e6e6" opacity="0.5"/>
+        <rect x="842" y="294" width="44" height="2.7" rx="1.3" fill="#10b981" opacity="0.75"/>
+        <rect x="842" y="302" width="80" height="2.7" rx="1.3" fill="#e6e6e6" opacity="0.45"/>
+        <rect x="842" y="310" width="56" height="2.7" rx="1.3" fill="#7c3aed" opacity="0.65"/>
+        <rect x="842" y="318" width="70" height="2.7" rx="1.3" fill="#e6e6e6" opacity="0.5"/>
+        <rect x="842" y="326" width="40" height="2.7" rx="1.3" fill="#f59e0b" opacity="0.65"/>
+      </g>
+
+      <!-- drawing window (mirrors what is being drawn on the glass) -->
+      <rect x="988" y="196" width="104" height="172" rx="6" fill="#1f2029" stroke="#323443" stroke-width="0.9"/>
+      <rect x="988" y="196" width="104" height="17" rx="6" fill="#262838"/>
+      <rect x="988" y="208" width="104" height="6" fill="#1f2029"/>
+      <rect x="994" y="202" width="34" height="3.4" rx="1.7" fill="#f472b6" opacity="0.85"/>
+      <rect x="992" y="218" width="96" height="144" rx="2" fill="#f3f5f8"/>
+      <!-- previous strokes -->
+      <path d="M998 236 Q1006 226 1012 234 Q1016 240 1010 244 Z" fill="none" stroke="#e64a19" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M1020 250 Q1030 242 1040 252" fill="none" stroke="#2e7d32" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M998 268 Q1010 258 1036 270" fill="none" stroke="#1565c0" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M1002 290 Q1014 280 1030 292" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <!-- live stroke mirroring the glass -->
+      <path class="anim-stroke" d="M998 320 Q1010 304 1020 320 Q1030 338 1042 314" fill="none" stroke="#e64a19" stroke-width="1.9" stroke-linecap="round"/>
+
+      <!-- terminal -->
+      <rect x="828" y="354" width="264" height="60" rx="6" fill="#0f1424" stroke="#1f2740" stroke-width="0.9"/>
+      <rect x="828" y="354" width="264" height="15" rx="6" fill="#1a2340"/>
+      <rect x="835" y="360" width="30" height="3.4" rx="1.7" fill="#9aa6c2" opacity="0.7"/>
+      <text x="835" y="382" fill="#5af3a8" font-size="8" font-family="monospace" opacity="0.9">$ octo draw --glass</text>
+      <text x="835" y="394" fill="#5af3a8" font-size="8" font-family="monospace" opacity="0.6">laying ink…</text>
+      <text x="835" y="406" fill="#5af3a8" font-size="8" font-family="monospace" opacity="0.9">done ✓</text>
+
+      <!-- dock -->
+      <rect x="864" y="418" width="164" height="13" rx="5" fill="#fff" opacity="0.07"/>
+      <g opacity="0.55">
+        <circle cx="876" cy="424.5" r="3.5" fill="#7c8cff"/><circle cx="890" cy="424.5" r="3.5" fill="#f472b6"/>
+        <circle cx="904" cy="424.5" r="3.5" fill="#10b981"/><circle cx="918" cy="424.5" r="3.5" fill="#f59e0b"/>
+        <circle cx="932" cy="424.5" r="3.5" fill="#60a5fa"/><circle cx="946" cy="424.5" r="3.5" fill="#fff" opacity="0.5"/>
+        <circle cx="960" cy="424.5" r="3.5" fill="#fff" opacity="0.5"/><circle cx="974" cy="424.5" r="3.5" fill="#fff" opacity="0.5"/>
+        <circle cx="988" cy="424.5" r="3.5" fill="#fff" opacity="0.5"/><circle cx="1002" cy="424.5" r="3.5" fill="#fff" opacity="0.45"/>
+      </g>
+
+      <!-- moving cursor (linked to the mouse) -->
+      <g class="anim-cursor" filter="url(#softGlow)">
+        <path d="M930 230 L938 238 L933 239 L937 244 L932 247 L928 243 L925 245 Z" fill="#fff" opacity="0.95"/>
+        <path d="M930 230 L938 238 L933 239 L937 244 L932 247 L928 243 L925 245 Z" fill="none" stroke="#000" stroke-width="0.4" opacity="0.4"/>
+      </g>
+    </g>
+
+    <!-- curvature shading + reflection -->
+    <path d="M818 156 Q984 138 1148 160 L1148 412 Q984 434 818 412 Z" fill="url(#curveShade)"/>
+    <path d="M820 160 Q984 144 1146 164 L1146 200 Q984 186 820 204 Z" fill="#fff" opacity="0.05"/>
+    <ellipse cx="984" cy="438" rx="10" ry="2" fill="#1a1c22"/>
+    <circle cx="984" cy="436" r="1.3" fill="#27c93f" opacity="0.8"/>
+  </g>
+
+  <!-- ===================== GLASS (same shape & size as the curved screen, parallel, floating ~5cm in front) ===================== -->
+  <!-- Same vertical span & curvature as the screen face; shifted left ~115px (toward the octopus) so a clear shadowed gap shows it is suspended in front of the monitor. -->
+  <g class="anim-glass">
+    <g filter="url(#glassShadow)">
+      <path d="M703 156 Q869 138 1033 160 L1033 412 Q869 434 703 412 Z" fill="url(#glass)" stroke="url(#glassRim)" stroke-width="1.7" opacity="0.97"/>
+      <path d="M707 160 Q869 144 1029 164 L1029 172 Q869 158 707 176 Z" fill="#fff" opacity="0.10"/>
+      <path d="M707 406 Q869 420 1029 412 L1029 408 Q869 426 707 410 Z" fill="#fff" opacity="0.05"/>
+      <path d="M724 162 Q840 188 1006 410" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.10"/>
+
+      <!-- art already on the glass -->
+      <g opacity="0.85" stroke-linecap="round" fill="none">
+        <path d="M738 242 Q754 228 768 246 Q780 262 792 244" stroke="#1565c0" stroke-width="2.8"/>
+        <path d="M730 274 Q748 262 766 280" stroke="#2e7d32" stroke-width="2.6"/>
+        <path d="M788 258 Q804 244 820 260" stroke="#1565c0" stroke-width="2.6"/>
+        <path d="M738 306 Q754 294 774 312" stroke="#2e7d32" stroke-width="2.6"/>
+        <circle cx="810" cy="294" r="2.6" fill="#e64a19" stroke="none" opacity="0.5"/>
+        <path d="M752 338 Q768 326 786 340" stroke="#f59e0b" stroke-width="2.6"/>
+      </g>
+      <!-- live stroke being drawn — starts at the pen nib contact point (~722, 236) -->
+      <path class="anim-stroke anim-ink" d="M720 236 Q736 222 752 240 Q768 258 784 238 Q800 220 816 244"
+            fill="none" stroke="#e64a19" stroke-width="3.2" stroke-linecap="round"/>
+
+      <!-- stand-off pegs at the four corners hint at the ~5cm gap -->
+      <circle cx="707" cy="160" r="2.8" fill="#9fb6d6" opacity="0.55"/>
+      <circle cx="1029" cy="160" r="2.8" fill="#9fb6d6" opacity="0.55"/>
+      <circle cx="707" cy="410" r="2.8" fill="#9fb6d6" opacity="0.55"/>
+      <circle cx="1029" cy="410" r="2.8" fill="#9fb6d6" opacity="0.55"/>
+    </g>
+  </g>
+  <!-- ===================== KEYBOARD (on desk, gripped by tentacle C) ===================== -->
+  <g filter="url(#devShadow)" transform="translate(820 620) rotate(-5)">
+    <rect x="0" y="0" width="210" height="66" rx="6" fill="url(#kbCase)" stroke="#000" stroke-width="1"/>
+    <rect x="2" y="2" width="206" height="62" rx="5" fill="none" stroke="#3a3a3e" stroke-width="0.6"/>
+    <!-- row 1 -->
+    <g fill="url(#key)" stroke="#0c0c0e" stroke-width="0.5">
+      <rect x="7" y="7" width="11" height="9" rx="1.6"/><rect x="21" y="7" width="11" height="9" rx="1.6"/>
+      <rect x="35" y="7" width="11" height="9" rx="1.6"/><rect x="49" y="7" width="11" height="9" rx="1.6"/>
+      <rect x="63" y="7" width="11" height="9" rx="1.6"/><rect x="77" y="7" width="11" height="9" rx="1.6"/>
+      <rect x="91" y="7" width="11" height="9" rx="1.6"/><rect x="105" y="7" width="11" height="9" rx="1.6"/>
+      <rect x="119" y="7" width="11" height="9" rx="1.6"/><rect x="133" y="7" width="11" height="9" rx="1.6"/>
+      <rect x="147" y="7" width="11" height="9" rx="1.6"/><rect x="161" y="7" width="11" height="9" rx="1.6"/>
+      <rect x="175" y="7" width="28" height="9" rx="1.6"/>
+    </g>
+    <!-- row 2 -->
+    <g fill="url(#key)" stroke="#0c0c0e" stroke-width="0.5">
+      <rect x="7" y="19" width="15" height="9" rx="1.6"/><rect x="25" y="19" width="11" height="9" rx="1.6"/>
+      <rect x="39" y="19" width="11" height="9" rx="1.6"/><rect x="53" y="19" width="11" height="9" rx="1.6"/>
+      <rect x="67" y="19" width="11" height="9" rx="1.6"/><rect x="81" y="19" width="11" height="9" rx="1.6"/>
+      <rect x="95" y="19" width="11" height="9" rx="1.6"/><rect x="109" y="19" width="11" height="9" rx="1.6"/>
+      <rect x="123" y="19" width="11" height="9" rx="1.6"/><rect x="137" y="19" width="11" height="9" rx="1.6"/>
+      <rect x="151" y="19" width="11" height="9" rx="1.6"/><rect x="165" y="19" width="11" height="9" rx="1.6"/>
+      <rect x="179" y="19" width="24" height="9" rx="1.6"/>
+    </g>
+    <!-- row 3 with active key -->
+    <g fill="url(#key)" stroke="#0c0c0e" stroke-width="0.5">
+      <rect x="7" y="31" width="18" height="9" rx="1.6"/><rect x="28" y="31" width="11" height="9" rx="1.6"/>
+      <rect x="42" y="31" width="11" height="9" rx="1.6"/><rect x="56" y="31" width="11" height="9" rx="1.6"/>
+      <rect x="70" y="31" width="11" height="9" rx="1.6"/><rect x="84" y="31" width="11" height="9" rx="1.6"/>
+      <rect x="98" y="31" width="11" height="9" rx="1.6"/>
+      <rect class="anim-key" x="98" y="31" width="11" height="9" rx="1.6" fill="#27c93f" opacity="0.85"/>
+      <rect x="112" y="31" width="11" height="9" rx="1.6"/><rect x="126" y="31" width="11" height="9" rx="1.6"/>
+      <rect x="140" y="31" width="11" height="9" rx="1.6"/><rect x="154" y="31" width="11" height="9" rx="1.6"/>
+      <rect x="168" y="31" width="35" height="9" rx="1.6"/>
+    </g>
+    <!-- space row -->
+    <g fill="url(#key)" stroke="#0c0c0e" stroke-width="0.5">
+      <rect x="7" y="43" width="24" height="9" rx="1.6"/><rect x="34" y="43" width="11" height="9" rx="1.6"/>
+      <rect x="48" y="43" width="104" height="9" rx="1.6"/>
+      <rect x="155" y="43" width="11" height="9" rx="1.6"/><rect x="169" y="43" width="11" height="9" rx="1.6"/>
+      <rect x="183" y="43" width="20" height="9" rx="1.6"/>
+    </g>
+    <circle cx="194" cy="52" r="1.4" fill="#27c93f" opacity="0.7"/>
+  </g>
+
+  <!-- vignette -->
+  <rect x="0" y="0" width="1300" height="800" fill="none" stroke="#000" stroke-width="130" opacity="0.06"/>
+</svg>

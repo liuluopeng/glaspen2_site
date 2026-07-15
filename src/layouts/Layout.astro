@@ -1,0 +1,35 @@
+---
+// Layout.astro — base HTML shell
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title = 'Glaspen2', description = 'Separate the pen from the mouse. Like writing on a glass overlay in front of your monitor.' } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body class="text-gray-900 antialiased">
+    <!-- 背景视频 -->
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      class="fixed inset-0 w-full h-full object-cover -z-10"
+      poster="/octopus-desk.svg"
+    >
+      <source src="/章鱼操作设备插画.mp4" type="video/mp4" />
+    </video>
+    <slot />
+  </body>
+</html>
